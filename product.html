@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wateery Recipes - Your Culinary Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Love+Light&family=Splash&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Nav Bar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="recipe.html">Recipes</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+   <!-- Food Comparison Section -->
+    <section class="food-comparison">
+        <div class="container">
+            <h1>Compare Food Products</h1>
+            <p>Find the perfect food product by comparing nutritional values and ingredients side by side.</p>
+            
+            <div class="product-cards">
+                <div class="product-card" id="product-card-1">
+                    <img id="product-image-1" src="https://via.placeholder.com/100" alt="Product Image">
+                    <h2 id="product-name-1">Organic Delight</h2>
+                    <p id="product-ingredients-1">Ingredients: Fresh organic ingredients</p>
+                    <p id="product-nutrition-1">Nutritional Info: 100 kcal per 100g</p>
+                </div>
+                
+                <div class="product-card" id="product-card-2">
+                    <img id="product-image-2" src="https://via.placeholder.com/100" alt="Product Image">
+                    <h2 id="product-name-2">Healthy Choice</h2>
+                    <p id="product-ingredients-2">Ingredients: Natural and non-GMO</p>
+                    <p id="product-nutrition-2">Nutritional Info: 150 kcal per 100g</p>
+                </div>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Enter barcode (e.g., 737628064502)...">
+                <button class="btn red" onclick="searchProduct()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Slider Section-->
+    <section class="recipe-slider">
+        <div class="containers">
+            <h1>Featured Recipes</h1>
+            <p>Explore our handpicked selection of recipes, curated for all tastes. From quick meals to gourmet dishes, find something special for every occasion.</p>
+            <div class="slider-wrapper">
+                <button class="slider-btn left" onclick="scrollSlider(-1)">&#10094;</button>
+                <div class="recipe-slider-container" id="recipe-slider">
+                    <!-- Recipes will be dynamically added here -->
+                </div>
+                <button class="slider-btn right" onclick="scrollSlider(1)">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Random Recipe Section-->
+    <section class="recipee-section">
+        <div class="intro-section">
+            <h1>Discover a Surprise Recipe!</h1>
+            <p>Click below and let us surprise you with a random cocktail recipe. Perfect for parties or a relaxing evening.</p>
+        </div>
+        <button id="load-magic-recipe-btn">Load a Surprise Recipe</button>
+        <!-- Fetched recipes will be displayed here -->
+    </section>
+
+      
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Wateery Recipes</h3>
+            <p>Serving delicious inspiration and culinary creativity since 2020.</p>
+            
+            <div class="footer-contact">
+                <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Gourmet City</p>
+                <p><i class="fas fa-envelope"></i> contact@feumes.com</p>
+                <p><i class="fas fa-phone"></i> +123 456 7890</p>
+            </div>
+            
+            <div class="footer-social">
+                <p>Stay Connected:</p>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
