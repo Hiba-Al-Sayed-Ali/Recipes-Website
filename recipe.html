@@ -14,33 +14,33 @@
     
     <!-- Nav Bar -->
     <nav class="navbar">
-      <ul class="nav-links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="recipe.html">Recipes</a></li>
-          <li><a href="product.html">Products</a></li>
-          <li><a href="contact.html">Contact</a></li>
-      </ul>
-  </nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="recipe.html">Recipes</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
 
-
-
-  <!-- Photos Section -->
-  <div id="recipe-container">
-    <div class="overlay">
-      <h1 id="main-title">Recipe Title</h1>
-      <p id="description">Recipe description goes here...</p>
-      <button id="recipe-btn">View Recipe</button>
+    <!-- Photos Section -->
+    <div id="recipe-container">
+        <div class="overlay">
+            <h1 id="main-title">Recipe Title</h1>
+            <p id="description">Recipe description goes here...</p>
+            <button id="recipe-btn">View Recipe</button>
+        </div>
     </div>
-  </div>
- 
-  <!-- Videos Section -->
-  <div class="texte">
-    <h1> Recipes & Videos</h1>
-    <p>Here you can see some recipes with a video for it</p>
-  </div>
-  <div class="recipes-container" id="recipes-container">
-    <!-- Recipes will be dynamically inserted here by JavaScript -->
-  </div>
+
+    <!-- Videos Section -->
+    <div class="texte-h">
+        <h1>Recipes & Videos</h1>
+        <p>Here you can see some recipes with a video for it</p>
+    </div>
+
+    <!-- Recipes Section -->
+    <div class="recipes-container-h" id="recipeContainerH"></div>
+        <!-- Recipes will be inserted here -->
+    </div>
 
     <!-- Footer Section -->
     <footer class="footer">
@@ -64,6 +64,7 @@
         </div>
     </footer>
 
-  <script src="script.js"></script>
+    <!-- Ensure the script is loaded after the HTML body -->
+    <script src="script.js" defer></script>
 </body>
 </html>
