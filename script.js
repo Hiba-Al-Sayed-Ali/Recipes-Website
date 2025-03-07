@@ -1,110 +1,128 @@
-const container = document.getElementById("recipe-container");
-const mainTitle = document.getElementById("main-title");
-const description = document.getElementById("description");
-const button = document.getElementById("recipe-btn");
 
-let currentRecipeIndex = 0;
+//Page 2
+// ------------------------Photo Section---------------------------
+document.addEventListener("DOMContentLoaded", async function () {
+    const container = document.getElementById("recipe-container");
+    const mainTitle = document.getElementById("main-title");
+    const description = document.getElementById("description");
+    const button = document.getElementById("recipe-btn");
 
+    let currentRecipeIndex = 0;
 
-// ------------------------Photos Section---------------------------
-// Fetch recipes from Spoonacular API
-async function fetchRecipes() {
-    const apiKey = 'eb57c4edb02f476fa04fd2af6d431399';
-    try {
-        const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=10`);
-        const data = await response.json();
-        const recipes = data.results;
+    async function fetchRecipes() {
+        const apiKey = 'eb57c4edb02f476fa04fd2af6d431399';
+        const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=10`;
+        
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (!data.results || data.results.length === 0) {
+                console.error("No recipes found.");
+                return;
+            }
 
-        setInterval(() => {
-            const recipe = recipes[currentRecipeIndex];
-            container.style.backgroundImage = `url(${recipe.image})`;
-            mainTitle.innerHTML = recipe.title;
-            description.innerHTML = `A delicious recipe for ${recipe.title}. Enjoy cooking!`;
-            button.onclick = () => {
-                window.location.href = `https://spoonacular.com/recipes/${recipe.title}-${recipe.id}`;
-            };
-            currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
-        }, 10000);
-    } catch (error) {
-        console.error('Error fetching recipes:', error);
-    }
-}
+            const recipes = data.results;
 
-fetchRecipes();
+            function updateRecipe() {
+                const recipe = recipes[currentRecipeIndex];
 
-// ------------------------Videos Section---------------------------
-// Fetch food videos from Pexels API
-async function fetchPexelsVideo(query) {
-    const apiKey = 'pWUWap3rKFArESfWAiqcyQXykcNZ7RlfS5dFZLxsqT3JYWB5TSMuxHjo';
-    const url = `https://api.pexels.com/videos/search?query=${query}&per_page=1`;
+                if (!recipe || !recipe.image) {
+                    console.error("Missing recipe data:", recipe);
+                    return;
+                }
 
-    const response = await fetch(url, { headers: { 'Authorization': apiKey } });
-    const data = await response.json();
+                console.log("Updating recipe:", recipe);
 
-    return data.videos[0]?.video_files[0]?.link || null;
-}
+                container.style.backgroundImage = `url(${recipe.image})`;
+                mainTitle.textContent = recipe.title;
+                description.textContent = `A delicious recipe for ${recipe.title}. Enjoy cooking!`;
 
-// Fetch and display recipes
-async function fetchRecipeData() {
-    const apiKey = 'eb57c4edb02f476fa04fd2af6d431399';
-    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=3`;
+                button.onclick = () => {
+                    window.location.href = `https://spoonacular.com/recipes/${recipe.title}-${recipe.id}`;
+                };
 
-    const response = await fetch(url);
-    const data = await response.json();
+                currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
+            }
 
-    for (const recipe of data.results) {
-        recipe.videoUrl = await fetchPexelsVideo(recipe.title);
-    }
+            updateRecipe(); // Show first recipe immediately
+            setInterval(updateRecipe, 10000); // Update every 10 seconds
 
-    displayRecipes(data.results);
-}
-
-// Display recipes with videos
-function displayRecipes(recipes) {
-    const container = document.getElementById('recipes-container');
-    container.innerHTML = '';
-
-    recipes.forEach((recipe, index) => {
-        const recipeDiv = document.createElement('div');
-        recipeDiv.classList.add('recipe-item');
-        recipeDiv.id = `recipe-${index + 1}`;
-
-        const sampleDescription = "We bring you the best recipes with premium ingredients and creativity.";
-
-        let content = `
-            <div class="recipe-left">
-                <h2>${recipe.title}</h2>
-                <p>${recipe.summary || sampleDescription}</p>
-            </div>
-            <div class="recipe-right">
-                <video controls>
-                    <source src="${recipe.videoUrl || 'default_video.mp4'}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        `;
-
-        if (index === 1) { 
-            content = `
-                <div class="recipe-left" style="text-align: center;">
-                    <h2 style="font-size: 1.8rem;">${recipe.title}</h2>
-                    <p>${recipe.summary || sampleDescription}</p>
-                </div>
-                <div class="recipe-right">
-                    <video controls>
-                        <source src="${recipe.videoUrl || 'default_video.mp4'}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            `;
-            recipeDiv.style.backgroundColor = '#f0f0f0';
+        } catch (error) {
+            console.error("Error fetching recipes:", error);
         }
+    }
 
-        recipeDiv.innerHTML = content;
-        container.appendChild(recipeDiv);
-    });
+    fetchRecipes();
+});
+
+// ------------------------Video Section---------------------------
+const SPOONACULAR_API_KEY = "eb57c4edb02f476fa04fd2af6d431399";
+const PEXELS_API_KEY = "pWUWap3rKFArESfWAiqcyQXykcNZ7RlfS5dFZLxsqT3JYWB5TSMuxHjo";
+
+async function fetchRecipesH() {
+    const spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?number=3&addRecipeInformation=true&apiKey=${SPOONACULAR_API_KEY}`;
+
+    try {
+        const response = await fetch(spoonacularURL);
+        const data = await response.json();
+
+        document.getElementById("recipeContainerH").innerHTML = "";
+
+        if (data.results) {
+            data.results.forEach((recipe, index) => {
+                fetchRecipeVideoH(recipe, index + 1);
+            });
+        }
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+    }
 }
-fetchRecipeData();
+
+async function fetchRecipeVideoH(recipe, index) {
+    const pexelsURL = `https://api.pexels.com/videos/search?query=${recipe.title}&per_page=1`;
+
+    try {
+        const response = await fetch(pexelsURL, {
+            headers: {
+                Authorization: PEXELS_API_KEY
+            }
+        });
+        const videoData = await response.json();
+
+        let videoURL = videoData.videos.length > 0 ? videoData.videos[0].video_files[0].link : null;
+        displayRecipeH(recipe, videoURL, index);
+    } catch (error) {
+        console.error("Error fetching video:", error);
+    }
+}
+
+function displayRecipeH(recipe, videoURL, index) {
+    const container = document.getElementById("recipeContainerH");
+
+    const recipeElement = document.createElement("div");
+    recipeElement.classList.add("recipe-item-h");
+    recipeElement.id = `recipe-${index}-h`;
+
+    recipeElement.innerHTML = `
+        <div class="recipe-left-h">
+            <h2>${recipe.title}</h2>
+            <p>${recipe.summary.replace(/<[^>]+>/g, '').substring(0, 300)}...</p>
+        </div>
+        ${videoURL ? `<div class="recipe-right-h">
+            <video controls>
+                <source src="${videoURL}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>` : "<p>No video available</p>"}
+    `;
+
+    container.appendChild(recipeElement);
+}
+
+window.onload = fetchRecipesH;
+
+
 
 // ------------------------Food Comparison Section---------------------------
 document.addEventListener("DOMContentLoaded", function () {
@@ -331,13 +349,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// ------------------------Nav Bar---------------------------
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
-const mobileMenu = document.getElementById('mobile-menu');
-
-menuToggle.addEventListener('click', () => {
-    // Toggle for nav-links and mobile-menu
-    navLinks.classList.toggle('active');  // Toggle for desktop nav
-    mobileMenu.classList.toggle('active');  // Toggle for mobile nav
-});
